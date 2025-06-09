@@ -13,7 +13,7 @@ const UrlForm = () => {
     setLoading(true);
     e.preventDefault();
     try {
-      const data = createShortUrl(url)
+      const data = await createShortUrl(url)
       setShortUrl(data);
       setUrl("");
       setIsCopied(false);
