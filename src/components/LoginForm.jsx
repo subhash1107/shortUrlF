@@ -1,21 +1,25 @@
+import { useNavigate } from '@tanstack/react-router';
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { loginUser } from "../api/user.api";
+import { login } from "../store/slice/authSlice.js";
 
 const LoginForm = () => {
   const [email, setEmail] = useState('subhash1@gmail.com');
   const [password, setPassword] = useState('Subhash@123');
-  const [user,setUser] = useState(null)
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const submitHandler = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
       const data = await loginUser(email,password)
-      console.log(data)
-      setUser(data);
-      console.log(user)
+      dispatch(login(data.user))
+      navigate({to:'/dashboard'})
       setEmail("");
       setPassword('')
     } catch (error) {

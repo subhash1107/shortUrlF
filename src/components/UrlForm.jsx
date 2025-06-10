@@ -1,21 +1,25 @@
 import { useState } from "react";
 import ShortUrlShow from "./ShortUrlShow";
 import { createShortUrl } from "../api/shortUrl.api";
+import { useSelector } from "react-redux";
 
 const UrlForm = () => {
-  const [url, setUrl] = useState(null);
-  const [shortUrl, setShortUrl] = useState(null);
+  const [url, setUrl] = useState('');
+  const [customUrl, setCustomUrl] = useState('');
+  const [shortUrl, setShortUrl] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const {isAuthenticated} = useSelector(store=>store.authReducer) 
 
   const submitHandler = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
-      const data = await createShortUrl(url)
+      const data = await createShortUrl(url,customUrl)
       setShortUrl(data);
       setUrl("");
+      setCustomUrl('');
       setIsCopied(false);
     } catch (error) {
       setError(error.message);
@@ -38,10 +42,24 @@ const UrlForm = () => {
           required
           id="url"
           placeholder="https://example.com"
-          className="w-full px-4 py-2 border border-gray-300"
+          className="w-full px-4 py-2 border border-gray-300 mb-4"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
         />
+        {isAuthenticated&&(<><label
+          className="block font-medium text-sm text-gray-600"
+          htmlFor="customUrl"
+        >
+          Enter Your Custom URL
+        </label>
+        <input
+          type="text"
+          id="customUrl"
+          placeholder="example"
+          className="w-full px-4 py-2 border border-gray-300"
+          value={customUrl}
+          onChange={(e) => setCustomUrl(e.target.value)}
+        /></>)}
       </div>
       <button
         type="submit"

@@ -16,6 +16,16 @@ export const registerUser = async (fullName,email, password) => {
     console.log(error.message);
   }
 };
+export const getCurrentUser = async () => {
+  try {
+    const { data } = await axiosInstance.get("/auth/me");
+    return data;
+  } catch (error) {
+    console.log(error.message);
+    throw new Error("Unauthorized ");
+    
+  }
+};
 export const logutUser = async () => {
   try {
     const { data } = await axiosInstance.get("/auth/logout");
