@@ -1,12 +1,9 @@
-import React from 'react'
-import HomePage from './pages/HomePage'
-import SignUpLoginPage from './pages/SignUpLoginPage'
+import { Outlet } from '@tanstack/react-router'
 
 const App = () => {
   return (
     <div className=''>
-      {/* <HomePage/> */}
-      <SignUpLoginPage/>
+      <Outlet/>
     </div>
   )
 }

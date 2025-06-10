@@ -2,8 +2,8 @@ import { useState } from "react";
 import { loginUser } from "../api/user.api";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState('subhash1@gmail.com');
+  const [password, setPassword] = useState('Subhash@123');
   const [user,setUser] = useState(null)
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -13,6 +13,7 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const data = await loginUser(email,password)
+      console.log(data)
       setUser(data);
       console.log(user)
       setEmail("");
@@ -62,7 +63,7 @@ const LoginForm = () => {
         type="submit"
         className="bg-blue-500 text-white w-full rounded-md py-2 px-4 hover:cursor-pointer"
       >
-        {loading ? "Signing in..." : "Login"}
+        {loading ? "Logging in..." : "Login"}
       </button>
       {error && <p className="text-red-600">{error}</p>}
     </form>
