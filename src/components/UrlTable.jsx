@@ -10,7 +10,7 @@ const UrlTable = ({ urls, isCopiedId, handleCopy }) => {
         </p>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto h-48">
         <table className="w-full text-sm text-left">
           <thead className="bg-gray-100 text-gray-600 uppercase text-xs tracking-wide">
             <tr>
@@ -22,7 +22,7 @@ const UrlTable = ({ urls, isCopiedId, handleCopy }) => {
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {urls?.urls?.map((url) => (
+            {[...urls.urls]?.reverse().map((url) => (
               <tr key={url._id} className="hover:bg-gray-50">
                 <td className="px-4 py-3 max-w-[120px] truncate text-gray-800">
                   {url.fullUrl}
