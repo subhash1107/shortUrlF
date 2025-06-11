@@ -2,6 +2,7 @@ import { useState } from "react";
 import ShortUrlShow from "./ShortUrlShow";
 import { createShortUrl } from "../api/shortUrl.api";
 import { useSelector } from "react-redux";
+import {queryClient} from './../main.jsx'
 
 const UrlForm = () => {
   const [url, setUrl] = useState('');
@@ -17,6 +18,7 @@ const UrlForm = () => {
     e.preventDefault();
     try {
       const data = await createShortUrl(url,customUrl)
+      queryClient.invalidateQueries({queryKey:['userUrls']})
       setShortUrl(data);
       setUrl("");
       setCustomUrl('');
