@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { registerUser } from "../api/user.api";
+import { useDispatch } from "react-redux";
+import { login } from "../store/slice/authSlice";
+import { useNavigate } from "@tanstack/react-router";
+
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
@@ -8,9 +12,12 @@ const SignupForm = () => {
     password: "",
   });
 
-  const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+    
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +38,8 @@ const SignupForm = () => {
         formData.email,
         formData.password
       );
-      setUser(data);
+      dispatch(login(data.user))
+      navigate({to:'/dashboard'})
       setFormData({ fullName: "", email: "", password: "" });
     } catch (error) {
       setError(error.message || "Something went wrong");
@@ -93,11 +101,6 @@ const SignupForm = () => {
       </button>
 
       {error && <p className="text-red-600">{error}</p>}
-      {user && (
-        <p className="text-green-600">
-          Welcome, {user.fullName || "User"}! Your account was created.
-        </p>
-      )}
     </form>
   );
 };
